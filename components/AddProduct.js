@@ -1,13 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, TextInput, Button } from 'react-native';
 
 
 const AddProduct = (props) => {
       const [product, setProduct] = useState('');
+      const [btnDisabled, setBtnDisabled] = useState(true);
+      useEffect(() => {
+        if (product.length > 1 ) {
+            setBtnDisabled(false)
+        } else {
+            setBtnDisabled(true)
+        }
+      }, [product ])
       const inputHandler = (value) => {
         setProduct(value);
         //setProduct('');
-      } 
+      };
+      const handleClick = () => {
+        props.handlePress(product);
+        setProduct('')
+      }
     
   return (
     <View style={styles.inputContainer}>
@@ -19,7 +31,9 @@ const AddProduct = (props) => {
           />
           <Button 
             title='Valider'
-            onPress={() => props.handlePress(product)}
+            onPress={handleClick}
+            disabled={btnDisabled}
+            //onPress={() => props.handlePress(product, setProduct)}
           />
     </View>
   )

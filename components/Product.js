@@ -1,12 +1,14 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 
-const Product = (props) => {
+const Product = ({removeItem, stringId, name}) => {
   return (
+    <Pressable onPress={ () => removeItem(stringId)} >
     <View style={styles.items} >
-      <Text style={styles.elements} > {props.name}</Text>
+      <Text style={styles.elements} > {name}</Text>
     </View>
+    </Pressable>
   )
 }
 const styles = StyleSheet.create({

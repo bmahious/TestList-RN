@@ -1,26 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
+import React, {useState,} from 'react';
+import { StyleSheet, View, FlatList, Alert } from 'react-native';
 import Product from './components/Product';
 import AddProduct from './components/AddProduct';
 
 export default function App() {
   const [myProduct, setMyProduct] = useState([]);
- 
+  
   // const handlePress = () => {
   //   setMyProduct(currentMyProduct => [...currentMyProduct, product]);
   //   setProduct('');
   // }
   const handlePress = (product) => {
-    const idString = Date.now().toString()
-    setMyProduct(currentMyProduct => [{key: idString, name: product}, ...currentMyProduct]);
+      const idString = Date.now().toString()
+      setMyProduct(currentMyProduct => [{key: idString, name: product}, ...currentMyProduct]);
+  }
+  const removeItem = (key) => {
+    setMyProduct((currentMyProduct) => {
+        return currentMyProduct.filter(product => product.key != key)
+    } )
   }
   return (
     <View style={styles.container}> 
         <AddProduct handlePress={handlePress} />
         <FlatList 
           data={myProduct}
-          renderItem={({item}) => <Product name={item.name}/>}
+          renderItem={({item}) => (
+             <Product  
+             removeItem={removeItem} 
+             name={item.name}
+             stringId={item.key} 
+             />
+          )}
         
         />
         {/* <ScrollView>
